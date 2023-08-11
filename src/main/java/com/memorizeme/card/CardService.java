@@ -13,11 +13,11 @@ public class CardService {
         this.cardRepository = cardRepository;
     }
 
-    public void saveCard(Card card) {
+    public void save(Card card) {
         cardRepository.save(card);
     }
 
-    public List<Card> getAllCards() {
+    public List<Card> getAll() {
         return cardRepository.findAll();
     }
 
@@ -25,11 +25,11 @@ public class CardService {
         return cardRepository.existsCardByWord(word);
     }
 
-    public long countCards() {
+    public long count() {
         return cardRepository.count();
     }
 
-    public void deleteAllCards(){
+    public void deleteAll(){
         cardRepository.deleteAll();
     }
 }

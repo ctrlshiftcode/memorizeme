@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Tag(name = "CardController")
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/cards")
+@RequestMapping("/v1/cards")
 public class CardController {
 
     final CardService cardService;
@@ -22,8 +23,8 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<Object> saveCard(@RequestBody @Valid CardDTO  cardDTO) {
+    @PostMapping("")
+    public ResponseEntity<Object> save(@RequestBody @Valid CardDTO  cardDTO) {
 
         Card card = new Card();
 
@@ -31,14 +32,19 @@ public class CardController {
         {
             BeanUtils.copyProperties(cardDTO, card);
             card.setRegistrationDate(LocalDate.now());
-            cardService.saveCard(card);
+            cardService.save(card);
             return ResponseEntity.status(HttpStatus.CREATED).body(card);
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("This word already exist!");
     }
 
-    @GetMapping("/getAll")
-    public ResponseEntity<List<Card>> getAllCards(){
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Card>> get(@PathVariable("id") Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(cardService.cardRepository.findById(id));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<Card>> getAll(){
        //TODO: Fazer paginação
         return ResponseEntity.status(HttpStatus.OK).body(cardService.cardRepository.findAll());
     }
@@ -48,8 +54,14 @@ public class CardController {
         return ResponseEntity.status(HttpStatus.OK).body("count:" + cardService.cardRepository.count());
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
+        cardService.cardRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Deleted card deck");
+    }
+
     @DeleteMapping("/deleteAll")
-    public ResponseEntity<Object> deleteAllCards(){
+    public ResponseEntity<Object> deleteAll(){
         cardService.cardRepository.deleteAll();
         return ResponseEntity.status(HttpStatus.OK).body("Deleted all cards deck");
     }
