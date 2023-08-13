@@ -32,6 +32,7 @@ public class MemorizemeAspect {
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 
+        //TODO: Refatorar, detectar chamada do Swagger
         if (!signature.getMethod().getName().equals("openapiJson")) {
 
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
