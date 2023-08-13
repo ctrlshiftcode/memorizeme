@@ -19,7 +19,7 @@ import java.util.Arrays;
 @Aspect
 @Component
 @Slf4j
-public class LogginAdvice {
+public class MemorizemeAspect {
 
     //TODO: IMPLEMENTAR OFUSCATOR
 
