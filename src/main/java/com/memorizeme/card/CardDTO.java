@@ -1,5 +1,6 @@
 package com.memorizeme.card;
 
+import com.google.gson.Gson;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

@@ -1,7 +1,10 @@
 package com.memorizeme.card;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @Tag(name = "CardController")
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -24,7 +28,7 @@ public class CardController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> save(@RequestBody @Valid CardDTO  cardDTO) {
+    public ResponseEntity<Object> save(@RequestBody @Valid CardDTO cardDTO) {
 
         Card card = new Card();
 
